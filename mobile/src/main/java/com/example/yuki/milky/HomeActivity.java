@@ -1,9 +1,7 @@
 package com.example.yuki.milky;
 
-import android.app.Activity;
 import android.app.Notification;
-import android.app.PendingIntent;
-import android.content.Intent;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -22,6 +20,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.yuki.milky.model.Hotel;
 import com.google.android.gms.common.ConnectionResult;
@@ -147,7 +146,7 @@ public class HomeActivity extends FragmentActivity implements
                                     Log.e(LOG_TAG, e.getMessage());
                                 }
                             }
-                            sendNotification();
+                            getHotelImages();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -158,6 +157,19 @@ public class HomeActivity extends FragmentActivity implements
             }
         });
         mQueue.add(request);
+    }
+
+    private void getHotelImages() {
+        if (hotelList != null && hotelList.size() > 0) {
+            mQueue.add(new ImageRequest(hotelList.get(0).imageUrl,new Response.Listener<Bitmap>() {
+
+                @Override
+                public void onResponse(Bitmap response) {
+                    hotelList.get(0).hotelBitmap = response;
+                    sendNotification();
+                }
+            }, 0, 0, null, null));
+        }
     }
 
     private void sendNotification() {
@@ -200,7 +212,7 @@ public class HomeActivity extends FragmentActivity implements
                     .setContentTitle("hotel")
                     .setContentText(hotelList.get(0).hotelName)
                     .setSmallIcon(R.drawable.ic_launcher)
-                    .extend(new NotificationCompat.WearableExtender())
+                    .extend(new NotificationCompat.WearableExtender().setBackground(hotelList.get(0).hotelBitmap))
                     .build();
 
             pages.add(hotel);
