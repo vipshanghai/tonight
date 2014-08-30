@@ -176,27 +176,13 @@ public class HomeActivity extends FragmentActivity implements
     private void sendNotification() {
         if (location != null && hotelList != null && hotelList.size() > 0) {
 
-            // location
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-                    .setContentTitle("現在地")
-                    .setContentText(location.getLatitude() + "," + location.getLongitude())
-                    .setSmallIcon(R.drawable.ic_launcher);
-//                    .setContentIntent(pIntent)
-//                    .addAction(R.drawable.ic_launcher, "返信", pIntent)   //…… 1
-//                    .addAction(R.drawable.ic_launcher, "転送", pIntent)
-//                        .build();
-
-            ArrayList<Notification> pages = new ArrayList<Notification>();
-
             // time
-            Notification time = new NotificationCompat.Builder(this)
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                     .setContentTitle("終電まで残り…")
                     .setContentText("30分")
-                    .setSmallIcon(R.drawable.ic_launcher)
-                    .extend(new NotificationCompat.WearableExtender())
-                    .build();
+                    .setSmallIcon(R.drawable.ic_launcher);
 
-            pages.add(time);
+            ArrayList<Notification> pages = new ArrayList<Notification>();
 
             // uber
             Notification uber = new NotificationCompat.Builder(this)
