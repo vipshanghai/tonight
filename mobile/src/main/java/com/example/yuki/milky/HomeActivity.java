@@ -2,6 +2,7 @@ package com.example.yuki.milky;
 
 import android.app.Notification;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -190,7 +191,7 @@ public class HomeActivity extends FragmentActivity implements
             // time
             Notification time = new NotificationCompat.Builder(this)
                     .setContentTitle("終電まで残り…")
-                    .setContentText("time")
+                    .setContentText("30分")
                     .setSmallIcon(R.drawable.ic_launcher)
                     .extend(new NotificationCompat.WearableExtender())
                     .build();
@@ -200,9 +201,9 @@ public class HomeActivity extends FragmentActivity implements
             // uber
             Notification uber = new NotificationCompat.Builder(this)
                     .setContentTitle("uber")
-                    .setContentText("taxi")
-                    .setSmallIcon(R.drawable.ic_launcher)
-                    .extend(new NotificationCompat.WearableExtender())
+                    .setContentText("東京タクシー")
+                    .setSmallIcon(R.drawable.mono_uberx)
+                    .extend(new NotificationCompat.WearableExtender().setBackground(BitmapFactory.decodeResource(getResources(), R.drawable.bk)))
                     .build();
 
             pages.add(uber);
