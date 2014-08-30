@@ -180,7 +180,9 @@ public class HomeActivity extends FragmentActivity implements
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                     .setContentTitle("終電まで残り…")
                     .setContentText("30分")
-                    .setSmallIcon(R.drawable.ic_launcher);
+                    .setSmallIcon(R.drawable.mono_uberx)
+                    .extend(new NotificationCompat.WearableExtender().setBackground(BitmapFactory.decodeResource(getResources(), R.drawable.train)))
+                    ;
 
             ArrayList<Notification> pages = new ArrayList<Notification>();
 
@@ -188,7 +190,6 @@ public class HomeActivity extends FragmentActivity implements
             Notification uber = new NotificationCompat.Builder(this)
                     .setContentTitle("uber")
                     .setContentText("東京タクシー")
-                    .setSmallIcon(R.drawable.mono_uberx)
                     .extend(new NotificationCompat.WearableExtender().setBackground(BitmapFactory.decodeResource(getResources(), R.drawable.bk)))
                     .build();
 
@@ -198,7 +199,6 @@ public class HomeActivity extends FragmentActivity implements
             Notification hotel = new NotificationCompat.Builder(this)
                     .setContentTitle("hotel")
                     .setContentText(hotelList.get(0).hotelName)
-                    .setSmallIcon(R.drawable.ic_launcher)
                     .extend(new NotificationCompat.WearableExtender().setBackground(hotelList.get(0).hotelBitmap))
                     .build();
 
