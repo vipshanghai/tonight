@@ -19,6 +19,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.LocationClient;
 
+import java.util.ArrayList;
+
 
 public class HomeActivity extends FragmentActivity implements
         GooglePlayServicesClient.ConnectionCallbacks,
@@ -53,22 +55,57 @@ public class HomeActivity extends FragmentActivity implements
         if (mLocationClient.isConnected()) {
             location = mLocationClient.getLastLocation();
             if (location != null) {
-//            Intent intent = new Intent(this, NotificationLandingActivity.class);
-//            PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
-                Notification n = new NotificationCompat.Builder(this)
+
+                // location
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                         .setContentTitle("現在地")
                         .setContentText(location.getLatitude() + "," + location.getLongitude())
-                        .setSmallIcon(R.drawable.ic_launcher)
+                        .setSmallIcon(R.drawable.ic_launcher);
 //                    .setContentIntent(pIntent)
 //                    .addAction(R.drawable.ic_launcher, "返信", pIntent)   //…… 1
 //                    .addAction(R.drawable.ic_launcher, "転送", pIntent)
+//                        .build();
+
+                ArrayList<Notification> pages = new ArrayList<Notification>();
+
+                // time
+                Notification time = new NotificationCompat.Builder(this)
+                        .setContentTitle("終電まで残り…")
+                        .setContentText("time")
+                        .setSmallIcon(R.drawable.ic_launcher)
+                        .extend(new NotificationCompat.WearableExtender())
                         .build();
 
-                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-                notificationManager.notify(0, n);
+                pages.add(time);
+
+                // uber
+                Notification uber = new NotificationCompat.Builder(this)
+                        .setContentTitle("uber")
+                        .setContentText("taxi")
+                        .setSmallIcon(R.drawable.ic_launcher)
+                        .extend(new NotificationCompat.WearableExtender())
+                        .build();
+
+                pages.add(uber);
+
+                // hotel
+                Notification hotel = new NotificationCompat.Builder(this)
+                        .setContentTitle("hotel")
+                        .setContentText("info")
+                        .setSmallIcon(R.drawable.ic_launcher)
+                        .extend(new NotificationCompat.WearableExtender())
+                        .build();
+
+                pages.add(hotel);
+
+                builder.extend(new NotificationCompat.WearableExtender().addPages(pages));
+
+                NotificationManagerCompat.from(this).notify(
+                        0, builder.build());
 
                 Toast.makeText(this, "sent", Toast.LENGTH_LONG).show();
+
             }
         } else {
             Toast.makeText(this, "not connected", Toast.LENGTH_LONG).show();
